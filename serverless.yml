@@ -1,0 +1,53 @@
+service: insultApi
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: mattsson-oscar
+  region: eu-north-1
+  iam:
+    role: arn:aws:iam::785567638763:role/oscar-mattsson
+  deploymentMethod: direct
+plugins:
+  - serverless-webpack
+package:
+  individually: true
+functions:
+  getInsult:
+    handler: functions/getInsult/index.handler
+    events:
+      - httpApi:
+          path: /api/insult
+          method: GET
+  postTodo:
+    handler: functions/postInsult/index.handler
+    events:
+      - httpApi:
+          path: /api/insult
+          method: POST
+  updateInsult:
+    handler: functions/updateInsult/index.handler
+    events:
+      - httpApi:
+          path: /api/insult{id}
+          method: PUT
+  deleteInsult:
+    handler: functions/deleteInsult/index.handler
+    events:
+      - httpApi:
+          path: /api/insult{id}
+          method: DELETE
+resources:
+  Resources:
+    InsultsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: insults
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
