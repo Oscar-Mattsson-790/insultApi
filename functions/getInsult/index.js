@@ -1,4 +1,4 @@
-const { sendResponse, sendError } = require("../../responses/index");
+const { sendResponse } = require("../../responses/index");
 const { db } = require("../../services/db");
 
 async function getInsult() {
