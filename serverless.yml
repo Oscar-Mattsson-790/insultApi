@@ -30,13 +30,13 @@ functions:
     handler: functions/updateInsult/index.handler
     events:
       - httpApi:
-          path: /api/insult{id}
+          path: /api/insult/{id}
           method: PUT
   deleteInsult:
     handler: functions/deleteInsult/index.handler
     events:
       - httpApi:
-          path: /api/insult{id}
+          path: /api/insult/{id}
           method: DELETE
 resources:
   Resources:
