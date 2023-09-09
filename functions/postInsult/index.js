@@ -2,13 +2,12 @@ const { sendResponse, sendError } = require("../../responses/index");
 const { db } = require("../../services/db");
 const { nanoid } = require("nanoid");
 
-async function postInsult() {
-  const requestBody = JSON.parse(event.body);
-
+async function postInsult(insult, play) {
+  // Accepting insult and play as parameters
   const newInsult = {
     id: nanoid(),
-    insult: insult,
-    play: play,
+    insult: insult, // Use the passed in insult
+    play: play, // Use the passed in play
   };
 
   const params = {
@@ -32,7 +31,8 @@ exports.handler = async (event, context) => {
       });
     }
 
-    const savedInsult = await savedInsult(requestBody.insult, requestBody.play);
+    // Call the correct function: postInsult
+    const savedInsult = await postInsult(requestBody.insult, requestBody.play);
 
     return sendResponse(200, { success: true, insult: savedInsult });
   } catch (error) {
