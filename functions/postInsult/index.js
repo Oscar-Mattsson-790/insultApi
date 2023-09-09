@@ -3,11 +3,10 @@ const { db } = require("../../services/db");
 const { nanoid } = require("nanoid");
 
 async function postInsult(insult, play) {
-  // Accepting insult and play as parameters
   const newInsult = {
     id: nanoid(),
-    insult: insult, // Use the passed in insult
-    play: play, // Use the passed in play
+    insult: insult,
+    play: play,
   };
 
   const params = {
@@ -31,7 +30,6 @@ exports.handler = async (event, context) => {
       });
     }
 
-    // Call the correct function: postInsult
     const savedInsult = await postInsult(requestBody.insult, requestBody.play);
 
     return sendResponse(200, { success: true, insult: savedInsult });
